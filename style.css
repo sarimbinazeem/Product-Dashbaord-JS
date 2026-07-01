@@ -95,7 +95,7 @@ body
 , #sort
 {
     background-color: var(--text);
-    width: 150px;
+    width: 200px;
     color: white;
     border-radius: 12px;
     cursor: pointer;
