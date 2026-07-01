@@ -97,7 +97,7 @@ function updateProducts()
     {
         let lowerSearch = searchText.toLowerCase();
         
-         filteredProducts = allProducts.filter((product) => {
+         filteredProducts = filteredProducts.filter((product) => {
           let lowerProduct = product.title.toLowerCase();
         
           return lowerProduct.includes(lowerSearch) ;
@@ -106,6 +106,19 @@ function updateProducts()
 
     }
 
+    let categoryText = category.value;
+
+    if(!categoryText.includes("all"))
+    {
+        const lowerCategory = categoryText.toLowerCase();
+        filteredProducts = filteredProducts.filter((product) =>
+        {
+             let lowerProduct = product.category.toLowerCase();
+        
+          return lowerProduct === lowerCategory ;
+
+        })
+    }
 
 
     display(filteredProducts);
@@ -114,6 +127,5 @@ function updateProducts()
 
 fetchProducts();
 
-search.addEventListener("input", () => {
-    updateProducts();
-});
+search.addEventListener("input", updateProducts);
+category.addEventListener("change",updateProducts);
