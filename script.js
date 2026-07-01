@@ -14,6 +14,7 @@ async function fetchProducts()
 {
     try
     {
+        showLoading()
         let response = await fetch("https://fakestoreapi.com/products");
 
         if(!response.ok)
@@ -24,10 +25,20 @@ async function fetchProducts()
         let data = await response.json();
 
         allProducts = data;
-
+        removeLoading();
     }
     catch(error)
     {
         console.log(error);
     }
+}
+
+function showLoading()
+{
+    loading.classList.remove("hidden");
+}
+
+function hideLoading()
+{
+    loading.classList.add("hidden");
 }
