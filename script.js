@@ -1,7 +1,7 @@
 const search = document.querySelector("#search");
 const category = document.querySelector("#category");
 const sort = document.querySelector("#sort");
-const products = document.querySelector(".products");
+const productContainer = document.querySelector(".products");
 const counter = document.querySelector(".counter");
 const loading = document.querySelector(".loading");
 const error = document.querySelector(".error");
@@ -26,6 +26,7 @@ async function fetchProducts()
         const data = await response.json();
 
         allProducts = data;
+        display(allProducts);
         hideLoading();
     }
     catch(err)
@@ -55,3 +56,56 @@ function hideError()
 {
     error.classList.add("hidden");
 }
+
+function display(products)
+{
+    productContainer.innerHTML = "";
+
+    products.forEach((product) => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+
+        const image = document.createElement("img");
+        image.src = product.image;
+        image.alt = product.title;
+
+        const title = document.createElement("h3");
+        title.textContent = product.title;
+
+        const category = document.createElement("p");
+        category.textContent = product.category;
+
+        const rating = document.createElement("p");
+        rating.textContent = `⭐ ${product.rating.rate} (${product.rating.count})`;
+
+        
+        const price = document.createElement("h2");
+        price.textContent = `$${product.price}`;
+
+        const button = document.createElement("button");
+        button.textContent = "View Details";
+         
+         card.append(
+            image,
+            title,
+            category,
+            rating,
+            price,
+            button
+        );
+
+        productsContainer.appendChild(card);
+    });
+
+    counter.textContent = `Showing ${products.length} products`;
+
+    if (products.length === 0)
+    {
+        empty.classList.remove("hidden");
+    }
+    else
+    {
+        empty.classList.add("hidden");
+    }
+}
+
