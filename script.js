@@ -88,17 +88,32 @@ function display(products) {
   }
 }
 
+function updateProducts()
+{
+    let filteredProducts = allProducts;
+    const searchText = search.value;
+
+    if(searchText)
+    {
+        let lowerSearch = searchText.toLowerCase();
+        
+         filteredProducts = allProducts.filter((product) => {
+          let lowerProduct = product.title.toLowerCase();
+        
+          return lowerProduct.includes(lowerSearch) ;
+        });
+        
+
+    }
+
+
+
+    display(filteredProducts);
+}
+
+
 fetchProducts();
 
 search.addEventListener("input", () => {
-  const searchText = search.value;
-  let lowerSearch = searchText.toLowerCase();
-
-  const filtered = allProducts.filter((product) => {
-    let lowerProduct = product.title.toLowerCase();
-
-    return lowerProduct.includes(lowerSearch) ;
-  });
-
-  display(filtered);
+    updateProducts();
 });
