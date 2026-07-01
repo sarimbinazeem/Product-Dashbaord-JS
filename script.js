@@ -24,7 +24,7 @@ async function fetchProducts() {
 
     allProducts = data;
     hideLoading();
-    display(allProducts);
+    updateProducts();
   } catch (err) {
     hideLoading();
     console.log(err);
@@ -95,7 +95,7 @@ function updateProducts()
 
     if(searchText)
     {
-        let lowerSearch = searchText.toLowerCase();
+         const lowerSearch = search.value.trim().toLowerCase();
         
          filteredProducts = filteredProducts.filter((product) => {
           let lowerProduct = product.title.toLowerCase();
@@ -108,7 +108,7 @@ function updateProducts()
 
     let categoryText = category.value;
 
-    if(!categoryText.includes("all"))
+    if(categoryText !== "all")
     {
         const lowerCategory = categoryText.toLowerCase();
         filteredProducts = filteredProducts.filter((product) =>
@@ -120,7 +120,18 @@ function updateProducts()
         })
     }
 
+    let sortText = sort.value;
 
+    if(sortText === "low-high")
+    {
+       filteredProducts.sort((a, b) => a.price - b.price);
+    }
+
+    if(sortText === "high-low")
+    {
+        filteredProducts.sort((a, b) => b.price - a.price);
+    }
+    console.log(filteredProducts)
     display(filteredProducts);
 }
 
@@ -129,3 +140,4 @@ fetchProducts();
 
 search.addEventListener("input", updateProducts);
 category.addEventListener("change",updateProducts);
+sort.addEventListener("change", updateProducts);
