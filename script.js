@@ -14,22 +14,25 @@ async function fetchProducts()
 {
     try
     {
-        showLoading()
-        let response = await fetch("https://fakestoreapi.com/products");
+        hideError();
+        showLoading();
+        const response = await fetch("https://fakestoreapi.com/products");
 
         if(!response.ok)
         {
             throw new Error("Page Not Found");
         }
 
-        let data = await response.json();
+        const data = await response.json();
 
         allProducts = data;
-        removeLoading();
+        hideLoading();
     }
-    catch(error)
+    catch(err)
     {
-        console.log(error);
+        hideLoading();
+        console.log(err);
+        showError();
     }
 }
 
@@ -41,4 +44,14 @@ function showLoading()
 function hideLoading()
 {
     loading.classList.add("hidden");
+}
+
+function showError()
+{
+    error.classList.remove("hidden");
+}
+
+function hideError()
+{
+    error.classList.add("hidden");
 }
