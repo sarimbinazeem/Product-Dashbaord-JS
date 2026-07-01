@@ -14,8 +14,8 @@ async function fetchProducts()
 {
     try
     {
-        hideError();
         showLoading();
+        hideError();
         const response = await fetch("https://fakestoreapi.com/products");
 
         if(!response.ok)
@@ -26,8 +26,8 @@ async function fetchProducts()
         const data = await response.json();
 
         allProducts = data;
-        display(allProducts);
         hideLoading();
+        display(allProducts);
     }
     catch(err)
     {
@@ -72,8 +72,8 @@ function display(products)
         const title = document.createElement("h3");
         title.textContent = product.title;
 
-        const category = document.createElement("p");
-        category.textContent = product.category;
+        const categoryText  = document.createElement("p");
+        categoryText.textContent = product.category;
 
         const rating = document.createElement("p");
         rating.textContent = `⭐ ${product.rating.rate} (${product.rating.count})`;
@@ -88,13 +88,13 @@ function display(products)
          card.append(
             image,
             title,
-            category,
+            categoryText,
             rating,
             price,
             button
         );
 
-        productsContainer.appendChild(card);
+        productContainer.appendChild(card);
     });
 
     counter.textContent = `Showing ${products.length} products`;
@@ -109,3 +109,4 @@ function display(products)
     }
 }
 
+fetchProducts();
